@@ -49,6 +49,7 @@ has channel => (
     default => sub { [] }
 );
 has password => ( is => 'rw', isa => 'Str' );
+has server_password => ( is => 'rw', isa => 'Str' );
 has port => ( is => 'rw', isa => 'Int', default => 6667 );
 has useipv6  => ( is => 'rw', isa => 'Bool', default => 1 );
 has localaddr => ( is => 'rw', isa => 'Str' );
@@ -150,6 +151,7 @@ sub _create_bot {
         store     => $self->store(),
         loglevel  => $self->loglevel(),
         logconfig => $self->logconfig(),
+        password  => $self->server_password(),
     );
 }
 
