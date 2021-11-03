@@ -50,7 +50,12 @@ sub told {
             }
             my $reply = $self->add_karma( $thing, $add, $comment, $mess->{who} );
             if (lc $thing eq lc $self->bot->nick) {
-                $reply .= ' ' . ($add ? '(thanks!)' : '(pffft)');
+                if ($reply eq '1') {
+                    $reply = '';
+                } else {
+                    $reply .= ' ';
+                }
+                $reply .= ($add ? '(thanks!)' : '(pffft)');
             }
             return $reply;
         }
