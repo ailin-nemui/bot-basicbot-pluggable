@@ -149,8 +149,8 @@ sub fallback {
         if ( !$literal && $factoid && $factoid =~ /\|/ ) {
             my @f;
 	    # Allow escaped pipes
-            if ($self->get("user_can_escape")) {
-                @f = split /(?<!\\)\|/, $factoid;
+            if ($self->get("user_escape_pipes")) {
+                @f = split /(?<!\\)(?>\\\\)*\|/, $factoid;
                 @f = map { s/\\\|/|/g; $_; } @f;
             } else {
                 @f = split /\|/, $factoid;
@@ -244,8 +244,10 @@ sub fallback {
 
     unless ( $self->protection_status($mess, $object) ) {
 	# Allow escaped newlines
-	$description =~ s/\\n/\n/g if $self->get("user_can_newline");
-	
+	if ($self->get("user_can_newline")) {
+	    $description =~ s/(?<!\\)(?>\\\\)*\\n/\n/g
+	}
+
 	# add this factoid. this comment is absolutely useless. excelsior.
 	$self->add_factoid( $object, $is_are, split( /\s+or\s+/, $description ) );
 
