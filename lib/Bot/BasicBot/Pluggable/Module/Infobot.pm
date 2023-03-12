@@ -30,6 +30,8 @@ sub init {
               "here|how|it|something|that|this|what|when|where|which|who|why",
             user_unknown_responses =>
 "Dunno.|I give up.|I have no idea.|No clue. Sorry.|Search me, bub.|Sorry, I don't know.",
+            user_escape_pipes     => 0,
+	    user_can_newline      => 0,
             db_version => "1",
         }
     );
