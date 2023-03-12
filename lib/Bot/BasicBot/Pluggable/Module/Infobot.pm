@@ -147,7 +147,14 @@ sub fallback {
         # get the factoid and type of relationship
         my ( $is_are, $factoid, $literal ) = $self->get_factoid($body);
         if ( !$literal && $factoid && $factoid =~ /\|/ ) {
-            my @f = split /\|/, $factoid;
+            my @f;
+	    # Allow escaped pipes
+            if ($self->get("user_can_escape")) {
+                @f = split /(?<!\\)\|/, $factoid;
+                @f = map { s/\\\|/|/g; $_; } @f;
+            } else {
+                @f = split /\|/, $factoid;
+            }
             $factoid = $f[ int( rand( scalar @f ) ) ];
         }
 
@@ -236,6 +243,9 @@ sub fallback {
     }
 
     unless ( $self->protection_status($mess, $object) ) {
+	# Allow escaped newlines
+	$description =~ s/\\n/\n/g if $self->get("user_can_newline");
+	
 	# add this factoid. this comment is absolutely useless. excelsior.
 	$self->add_factoid( $object, $is_are, split( /\s+or\s+/, $description ) );
 
