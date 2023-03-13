@@ -31,7 +31,7 @@ sub init {
             user_unknown_responses =>
 "Dunno.|I give up.|I have no idea.|No clue. Sorry.|Search me, bub.|Sorry, I don't know.",
             user_escape_pipes     => 0,
-	    user_can_newline      => 0,
+            user_can_newline      => 0,
             db_version => "1",
         }
     );
@@ -150,7 +150,7 @@ sub fallback {
         my ( $is_are, $factoid, $literal ) = $self->get_factoid($body);
         if ( !$literal && $factoid && $factoid =~ /\|/ ) {
             my @f;
-	    # Allow escaped pipes
+            # Allow escaped pipes
             if ($self->get("user_escape_pipes")) {
                 @f = split /(?<!\\)(?>\\\\)*\|/, $factoid;
                 @f = map { s/\\\|/|/g; $_; } @f;
@@ -676,6 +676,14 @@ blocking it. Defaults to 10.
 =item rss_items
 
 Maximal numbers of items returns when using RSS feeds. Defaults to 5.
+
+=item can_newline
+
+Allow newlines in factoids with \n (\\n is then needed for a literal backslash-n)
+
+=item escape_pipes
+
+Allow pipes in factoids with \| (otherwise they separate random items; see IRC USAGE above).
 
 =back
 
