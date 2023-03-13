@@ -1,6 +1,6 @@
 Revision history for Perl extension Bot::BasicBot::Pluggable.
 
-{{NEXT}}
+1.30 - 2023-03-13
 - Avoid spurious table exists warning in ::Store::DBI (RT #75849, PR #11),
   with thanks to Michael Alexander (omni)
 - Fix typo in doco (alt_nicks not alt_nicks) - also with thanks to omni
